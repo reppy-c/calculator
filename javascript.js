@@ -16,16 +16,13 @@ let betweenNumbers = false;
 
 // Welcome in console and run five rounds
 function main() {
-    
-    console.log("dd");
-
-    //add listeners to all the buttons
+    // Add listeners to all the buttons
     let allKeypadButtons = document.querySelectorAll("#keypad > button");
+
     allKeypadButtons.forEach(button => {
         button.addEventListener("click", buttonPress);
     })
 }
-
 
 //buttonpress
 function buttonPress(e) {
@@ -35,7 +32,7 @@ function buttonPress(e) {
     switch(buttonPressed) {
     // check for C, AC
         case 'AC': reset(); break;
-        case 'C': clearPrimary(); break;
+        /*case 'C': clearPrimary(); break;*/
 
     // check for operators
         case 'divide':
@@ -141,6 +138,20 @@ function reset() {
 }
 
 function updateDisplay() {
+
+    // Number is just too big
+    if(firstNumber > 999999999) {
+        primaryDisplayString = "TOO BIG";
+    }    
+
+    // Otherwise its decimals, keep rounding until its 10 characters
+    let i = 10;
+
+    while(primaryDisplayString.toString().length > 10) {
+        primaryDisplayString = firstNumber.toFixed(i);
+        i--;
+    }
+
     primaryDisplay.innerHTML = primaryDisplayString;
     secondaryDisplay.innerHTML = secondaryDisplayString;
 }
