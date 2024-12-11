@@ -1,6 +1,3 @@
-const ADD = "+";
-const SUBTRACT = "-";
-
 var r = document.querySelector(':root');
 let primaryDisplayString = '';
 let secondaryDisplayString = '';
@@ -14,7 +11,7 @@ let operator = '';
 // Variable to track if between numbers, e.g. operator or equals pressed
 let betweenNumbers = false;
 
-// Welcome in console and run five rounds
+// Main function
 function main() {
     // Add listeners to all the buttons
     let allKeypadButtons = document.querySelectorAll("#keypad > button");
@@ -24,7 +21,7 @@ function main() {
     })
 }
 
-//buttonpress
+// Button press event handler
 function buttonPress(e) {
 
     let buttonPressed = this.dataset.buttonvalue;
@@ -32,7 +29,7 @@ function buttonPress(e) {
     switch(buttonPressed) {
     // check for C, AC
         case 'AC': reset(); break;
-        /*case 'C': clearPrimary(); break;*/
+        case 'C': clearPrimary(); betweenNumbers = false; break;
 
     // check for operators
         case 'divide':
@@ -55,13 +52,18 @@ function buttonPress(e) {
             betweenNumbers = true;
          } break;    
 
+        case 'del': {
+            if(primaryDisplayString.toString().length > 0)
+                primaryDisplayString = primaryDisplayString.slice(0, -1); 
+
+            updatePrimary();
+        } break;
 
         case 'equals': {
             secondNumber = parseFloat(primaryDisplayString);
             clearPrimary();            
             compute(operator);
             firstNumber = null;
-
         } break;
 
         case '0':
@@ -137,6 +139,7 @@ function reset() {
     updateDisplay();
 }
 
+// Update display, but sanitize output to prevent display overflow (crudely)
 function updateDisplay() {
 
     // Number is just too big
@@ -158,7 +161,6 @@ function updateDisplay() {
 
 // Display update/clear functions
 function updatePrimary() { primaryDisplay.innerHTML = primaryDisplayString; }
-
 function updateSecondary() { secondaryDisplay.innerHTML = secondaryDisplayString; }
 
 function clearPrimary() {
