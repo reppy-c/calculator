@@ -1,5 +1,5 @@
 const ADD = "+";
-
+const SUBTRACT = "-";
 
 var r = document.querySelector(':root');
 let primaryDisplayString = '';
@@ -39,23 +39,39 @@ function buttonPress(e) {
 
     // check for operators
         case 'add': {
-            operator = ADD; // add this operator to the operator variable
+            operator = buttonPressed; // add this operator to the operator variable
             
             // First time pressing add (firstNumber is null)
             if(firstNumber == null) {
                 firstNumber = parseFloat(primaryDisplayString);
-                betweenNumbers = true;
                 updatePrimary();
             }     
             // If first number has a value, this is a successive add 
             else {
                 secondNumber = parseFloat(primaryDisplayString);
-                betweenNumbers = true;
                 clearPrimary();
                 compute(operator);
             }
-        
-            } break;             
+            betweenNumbers = true;
+         } break;    
+
+         case 'subtract': {
+            operator = buttonPressed; // add this operator to the operator variable
+            
+            // First time pressing add (firstNumber is null)
+            if(firstNumber == null) {
+                firstNumber = parseFloat(primaryDisplayString);
+                updatePrimary();
+            }     
+            // If first number has a value, this is a successive add 
+            else {
+                secondNumber = parseFloat(primaryDisplayString);
+                clearPrimary();
+                compute(operator);
+            }
+            betweenNumbers = true;
+         } break;    
+
 
         case 'equals': {
             secondNumber = parseFloat(primaryDisplayString);
@@ -64,6 +80,7 @@ function buttonPress(e) {
             firstNumber = null;
 
         } break;
+
         case '0':
         case '1':
         case '2':
@@ -88,22 +105,21 @@ function buttonPress(e) {
 // Perform operation, might need to add arg to see if its done by equal or another operator
 function compute(operator) {
     switch(operator) {
-        case ADD: {
+        case 'add': {
             secondaryDisplayString = firstNumber.toString() + " + " + secondNumber.toString();
-
             firstNumber += secondNumber;
-            primaryDisplayString = firstNumber;
-            
-            updateDisplay();
-            secondNumber = null;
-            betweenNumbers = true;
         } break;
 
-        case 'x': {
-            
+        case 'subtract': {
+            secondaryDisplayString = firstNumber.toString() + " - " + secondNumber.toString();
+            firstNumber -= secondNumber;
         } break;
-
     }
+
+    primaryDisplayString = firstNumber;            
+    updateDisplay();
+    secondNumber = null;
+    betweenNumbers = true;
 }
 
 // Add digit to display and primaryDisplayString if valid
