@@ -2,6 +2,11 @@
     --text-colour: #544E68;
 }
 
+@font-face {
+    font-family: 'Joystix';
+    src: url('joystix.otf') format('opentype');
+}
+
 body {
     background-color: #0D2B45;
     text-align: center;
