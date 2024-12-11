@@ -38,24 +38,10 @@ function buttonPress(e) {
         case 'C': clearPrimary(); break;
 
     // check for operators
-        case 'add': {
-            operator = buttonPressed; // add this operator to the operator variable
-            
-            // First time pressing add (firstNumber is null)
-            if(firstNumber == null) {
-                firstNumber = parseFloat(primaryDisplayString);
-                updatePrimary();
-            }     
-            // If first number has a value, this is a successive add 
-            else {
-                secondNumber = parseFloat(primaryDisplayString);
-                clearPrimary();
-                compute(operator);
-            }
-            betweenNumbers = true;
-         } break;    
-
-         case 'subtract': {
+        case 'divide':
+        case 'multiply':
+        case 'add':
+        case 'subtract': {
             operator = buttonPressed; // add this operator to the operator variable
             
             // First time pressing add (firstNumber is null)
@@ -113,6 +99,16 @@ function compute(operator) {
         case 'subtract': {
             secondaryDisplayString = firstNumber.toString() + " - " + secondNumber.toString();
             firstNumber -= secondNumber;
+        } break;
+
+        case 'divide': {
+            secondaryDisplayString = firstNumber.toString() + " ÷ " + secondNumber.toString();
+            firstNumber /= secondNumber;
+        } break;
+
+        case 'multiply': {
+            secondaryDisplayString = firstNumber.toString() + " x " + secondNumber.toString();
+            firstNumber *= secondNumber;
         } break;
     }
 
